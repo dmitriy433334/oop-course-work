@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> Admin panel </title>
+  {% block css %} {% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='/admin/css/header.css') }}">
+</head>
+<body>
+
+<div id="main">
+
+  <header id="header">
+    <div class="header_sections">
+      <div> <h2> <a href="{{ url_for('dashboard') }}"> Hello  {{ current_user.username }}! </a> </h2> </div>
+      <div> <a id='logout-btn' href="#"> Log out </a> </div>
+    </div>
+  </header>
+
+  {% block content %}
+
+  {% endblock %}
+</div>
+
+{% block js %}
+
+<script type="module">
+  import 'https://code.jquery.com/jquery-3.6.0.min.js';
+
+  $("#logout-btn").on('click', () => {
+      $.ajax({
+          url: "/auth/logout",
+          method: "POST",
+      }).then(() => window.location.reload())
+  })
+
+</script>
+
+{% endblock %}
+</body>
+</html>

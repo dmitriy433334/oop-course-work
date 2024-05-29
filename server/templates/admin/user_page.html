@@ -1,0 +1,46 @@
+{% extends '/admin/pages/admin_page.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/admin/css/user_details_page.css') }}">
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+{% endblock %}
+
+{% block content %}
+
+<div id="user-block">
+
+  <div class="user-header">
+    <div class="sub-header">
+      <div><span>ID: {{ user.id }} </span></div>
+      <div><span>Username: {{ user.username }} </span></div>
+      <div><span>Register date: {{ user.dateRegistered }} </span></div>
+    </div>
+  </div>
+
+  <div class="files-wrapper">
+    <span>Files:</span>
+    {% for file in files %}
+    <div>
+      <a href="/files/{{ file.user_id }}/{{file.file_name}}">{{file.file_name}}</a>
+      <input type="button" value="delete file" class="delete-file-btn" fileId="{{file.user_id}}">
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script type="module">
+  import "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js";
+
+  document.querySelectorAll('.delete-file-btn').forEach((btn) => {
+    btn.addEventListener("click", () => {
+      var fileId = Number(btn.getAttribute("fileId"));
+      $.ajax({
+        url: "/files/remove-file",
+        method: "DELETE",
+        data: {fileId}
+      })
+    });
+  });
+</script>
+
+{% endblock %}

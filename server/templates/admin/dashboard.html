@@ -1,0 +1,35 @@
+{% extends '/admin/pages/admin_page.html' %}
+
+
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='/admin/css/admin_panel.css')}}"> {% endblock %}
+
+{% block content %}
+
+<div id="user-table">
+
+  <div class="user-info">
+    <span> User id </span>
+    <span> Username  </span>
+    <span> Date registered </span>
+    <span></span>
+    <span></span>
+  </div>
+
+  {% for user in users %}
+    <div class="user-info">
+      <span> {{ user['id'] }} </span>
+      <span> {{ user['username'] }} </span>
+      <span> {{ user['dateRegistered'] }} </span>
+      <span> <a href="/admin/user/{{ user['id'] }}"> <input type="button" value="view files"> </a></span>
+      <span> <input type="button" value="delete the user" userId="{{ user['id'] }}" class="delete_btn"></span>
+    </div>
+  {% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="module"  src="{{ url_for('static', filename='/admin/js/dashboard.js') }}"></script>
+{% endblock %}
+
